@@ -19,10 +19,23 @@ clean-targets:
 
 models:
   cea_aw_franciscotaveira:
+
+    # Camada Staging (Padronização inicial, sem joins ou agregações)
     staging:
       +schema: staging
-      +materialized: view
+      +materialized: table
 
+    # Camada Intermediate (Aplicação de lógica de negócio, joins e métricas derivadas)
+    intermediate:
+      +schema: intermediate
+      +materialized: table
+
+    # Camada Marts (Tabelas finais para consumo no BI)
+    marts:
+      +schema: marts
+      +materialized: table 
+
+    # Categorias adicionais (se necessário, pode ser removido se não usado)
     erp:
       +schema: erp
       +materialized: table
