@@ -34,12 +34,11 @@ O CEO, **Carlos Silveira**, vê a análise de dados como diferencial estratégic
 
 ## 🛠 Tecnologias Utilizadas
 
-- **PostgreSQL**: Base de dados transacional da empresa.
 - **dbt**: Modelagem de dados e criação do Data Warehouse.
-- **Snowflake** (ou outro Data Warehouse na nuvem): Armazenamento otimizado para análises.
-- **Power BI / Looker Studio**: Construção de dashboards interativos.
+- **Snowflake** : Armazenamento otimizado para análises.
+- **Power BI**: Construção de dashboards interativos.
 - **GitHub**: Controle de versão do projeto.
-- **Python / SQL**: Para consultas e scripts auxiliares.
+- **SQL**: Para consultas e scripts auxiliares.
 
 ## 📌 Modelagem de Dados
 
@@ -85,4 +84,4 @@ Os dashboards fornecem insights como:
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/seuusuario/adventure-works-analytics.git
+   git clone https://github.com/ftaveira-data/cea_aw_franciscotaveira.git
