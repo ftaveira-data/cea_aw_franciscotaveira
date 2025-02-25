@@ -23,12 +23,12 @@ models:
     # Camada Staging (Padronização inicial, sem joins ou agregações)
     staging:
       +schema: staging
-      +materialized: table
+      +materialized: view
 
     # Camada Intermediate (Aplicação de lógica de negócio, joins e métricas derivadas)
     intermediate:
       +schema: intermediate
-      +materialized: table
+      +materialized: view
 
     # Camada Marts (Tabelas finais para consumo no BI)
     marts:
