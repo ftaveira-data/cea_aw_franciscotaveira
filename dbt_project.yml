@@ -20,34 +20,34 @@ clean-targets:
 models:
   cea_aw_franciscotaveira:
 
-    # Camada Staging (Padronização inicial, sem joins ou agregações)
+    # 🔹 Camada Staging (STG) - Transformação inicial
     staging:
-      +schema: staging
+      +schema: stg  # Criando o schema STG no Snowflake
       +materialized: view
 
-    # Camada Intermediate (Aplicação de lógica de negócio, joins e métricas derivadas)
+      erp:
+        +schema: stg
+        +materialized: view
+
+      crm:
+        +schema: stg
+        +materialized: view
+
+      site:
+        +schema: stg
+        +materialized: view
+
+      web_analytics:
+        +schema: stg
+        +materialized: view
+
+    # 🔹 Camada Intermediate (INT) - Lógica de negócio, joins e métricas derivadas
     intermediate:
-      +schema: intermediate
+      +schema: int  # Criando o schema INT no Snowflake
       +materialized: view
 
-    # Camada Marts (Tabelas finais para consumo no BI)
+    # 🔹 Camada Marts (MARTS) - Tabelas finais para consumo no BI
     marts:
-      +schema: marts
-      +materialized: table 
-
-    # Categorias adicionais (se necessário, pode ser removido se não usado)
-    erp:
-      +schema: erp
+      +schema: marts  # Criando o schema MARTS no Snowflake
       +materialized: table
 
-    crm:
-      +schema: crm
-      +materialized: table
-
-    site:
-      +schema: site
-      +materialized: table
-
-    web_analytics:
-      +schema: web_analytics
-      +materialized: table
