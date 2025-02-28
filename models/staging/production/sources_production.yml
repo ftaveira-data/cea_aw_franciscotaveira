@@ -1,0 +1,83 @@
+version: 2
+
+sources:
+  - name: production
+    description: "Sistema de produção da Adventure Works"
+    schema: dbt_ftaveira_aw_raw
+    database: fea24_11
+
+    tables:
+      # 📌 Tabela de produtos
+      - name: Product
+        description: "Produtos disponíveis para venda"
+        columns:
+          - name: ProductID
+            description: "Identificador único do produto (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do produto"
+          - name: ProductSubcategoryID
+            description: "ID da subcategoria do produto (FK para ProductSubcategory)"
+          - name: StandardCost
+            description: "Custo padrão do produto"
+          - name: ListPrice
+            description: "Preço de venda sugerido"
+
+      # 📌 Tabela de subcategorias de produtos
+      - name: ProductSubcategory
+        description: "Subcategorias dos produtos"
+        columns:
+          - name: ProductSubcategoryID
+            description: "Identificador único da subcategoria do produto (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome da subcategoria do produto"
+          - name: ProductCategoryID
+            description: "ID da categoria do produto (FK para ProductCategory)"
+
+      # 📌 Tabela de categorias de produtos
+      - name: ProductCategory
+        description: "Categorias de produtos"
+        columns:
+          - name: ProductCategoryID
+            description: "Identificador único da categoria do produto (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome da categoria do produto"
+
+      # 📌 Tabela de inventário de produtos
+      - name: ProductInventory
+        description: "Níveis de estoque dos produtos"
+        columns:
+          - name: ProductID
+            description: "Identificador do produto (FK para Product)"
+            tests:
+              - not_null
+          - name: LocationID
+            description: "Identificador da localização do estoque"
+          - name: Quantity
+            description: "Quantidade disponível em estoque"
+
+      # 📌 Tabela de ordens de produção
+      - name: WorkOrder
+        description: "Ordens de produção registradas no sistema"
+        columns:
+          - name: WorkOrderID
+            description: "Identificador único da ordem de produção (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: ProductID
+            description: "Produto associado à ordem de produção (FK para Product)"
+          - name: OrderQty
+            description: "Quantidade solicitada na ordem de produção"
+          - name: DueDate
+            description: "Data de vencimento da ordem de produção"
+          - name: ScrapReasonID
+            description: "Motivo para descarte de produtos, se houver"

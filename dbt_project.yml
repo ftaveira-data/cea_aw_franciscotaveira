@@ -4,7 +4,6 @@ config-version: 2
 
 profile: 'default'
 
-# Definição dos diretórios usados no projeto
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
@@ -20,34 +19,29 @@ clean-targets:
 models:
   cea_aw_franciscotaveira:
 
-    # 🔹 Camada Staging (STG) - Transformação inicial
+    # 🔹 Staging Layer (STG) - Standardization and cleaning
     staging:
-      +schema: stg  # Criando o schema STG no Snowflake
+      +schema: stg
       +materialized: view
 
-      erp:
+      sales:
+        +schema: stg
+        +materialized: view
+      
+      production:
         +schema: stg
         +materialized: view
 
-      crm:
+      person:
         +schema: stg
         +materialized: view
 
-      site:
-        +schema: stg
-        +materialized: view
-
-      web_analytics:
-        +schema: stg
-        +materialized: view
-
-    # 🔹 Camada Intermediate (INT) - Lógica de negócio, joins e métricas derivadas
+    # 🔹 Intermediate Layer (INT) - Business logic, joins, and transformations
     intermediate:
-      +schema: int  # Criando o schema INT no Snowflake
+      +schema: int
       +materialized: view
 
-    # 🔹 Camada Marts (MARTS) - Tabelas finais para consumo no BI
+    # 🔹 Marts Layer (MARTS) - Final tables for BI consumption
     marts:
-      +schema: marts  # Criando o schema MARTS no Snowflake
+      +schema: marts
       +materialized: table
-
