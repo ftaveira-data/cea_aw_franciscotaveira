@@ -4,7 +4,6 @@ config-version: 2
 
 profile: 'default'
 
-# Definição dos diretórios usados no projeto
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
@@ -20,34 +19,29 @@ clean-targets:
 models:
   cea_aw_franciscotaveira:
 
-    # Camada Staging (Padronização inicial, sem joins ou agregações)
+    # 🔹 Staging Layer (STG) - Standardization and cleaning
     staging:
-      +schema: staging
+      +schema: stg
       +materialized: view
 
-    # Camada Intermediate (Aplicação de lógica de negócio, joins e métricas derivadas)
+      sales:
+        +schema: stg
+        +materialized: view
+      
+      production:
+        +schema: stg
+        +materialized: view
+
+      person:
+        +schema: stg
+        +materialized: view
+
+    # 🔹 Intermediate Layer (INT) - Business logic, joins, and transformations
     intermediate:
-      +schema: intermediate
+      +schema: int
       +materialized: view
 
-    # Camada Marts (Tabelas finais para consumo no BI)
+    # 🔹 Marts Layer (MARTS) - Final tables for BI consumption
     marts:
       +schema: marts
-      +materialized: table 
-
-    # Categorias adicionais (se necessário, pode ser removido se não usado)
-    erp:
-      +schema: erp
-      +materialized: table
-
-    crm:
-      +schema: crm
-      +materialized: table
-
-    site:
-      +schema: site
-      +materialized: table
-
-    web_analytics:
-      +schema: web_analytics
       +materialized: table

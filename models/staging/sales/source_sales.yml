@@ -1,44 +1,42 @@
 version: 2
 
 sources:
-  - name: erp
+  - name: sales
     description: "Sistema de vendas da Adventure Works"
     schema: dbt_ftaveira_aw_raw
     database: fea24_11
 
     tables:
-      # 📌 Tabela principal de pedidos
       - name: SalesOrderHeader
         description: "Cabeçalho dos pedidos de venda"
         columns:
           - name: SalesOrderID
-            description: "ID único do pedido de venda"
+            description: "Identificador único do pedido de venda (PK)"
             tests:
               - unique
               - not_null
           - name: CustomerID
-            description: "ID do cliente"
+            description: "Identificador do cliente (FK para Customer)"
             tests:
-              - not_null
+              - not_null       
           - name: SalesPersonID
-            description: "ID do vendedor responsável pela venda"
+            description: "Identificador do vendedor responsável pela venda (FK para SalesPerson)"
           - name: OrderDate
             description: "Data em que o pedido foi realizado"
             tests:
               - not_null
           - name: TotalDue
-            description: "Valor total do pedido"
+            description: "Valor total devido pelo pedido"
 
-      # 📌 Tabela de detalhes dos pedidos
       - name: SalesOrderDetail
         description: "Detalhes dos itens vendidos em cada pedido"
         columns:
           - name: SalesOrderID
-            description: "ID do pedido (chave estrangeira para SalesOrderHeader)"
+            description: "ID do pedido (FK para SalesOrderHeader)"
             tests:
               - not_null
           - name: ProductID
-            description: "ID do produto vendido"
+            description: "ID do produto vendido (FK para Product)"
             tests:
               - not_null
           - name: OrderQty
@@ -46,76 +44,71 @@ sources:
           - name: UnitPrice
             description: "Preço unitário do produto"
           - name: LineTotal
-            description: "Valor total da linha de pedido"
+            description: "Valor total da linha do pedido"
 
-      # 📌 Tabela de clientes
       - name: Customer
-        description: "Clientes cadastrados no ERP"
+        description: "Clientes cadastrados no sistema"
         columns:
           - name: CustomerID
-            description: "ID único do cliente"
+            description: "Identificador único do cliente (PK)"
             tests:
               - unique
               - not_null
           - name: PersonID
-            description: "Referência para a tabela Person"
+            description: "Referência para a tabela Person (FK para Person)"
           - name: StoreID
             description: "ID da loja vinculada ao cliente"
           - name: TerritoryID
-            description: "ID da região de vendas"
+            description: "ID do território de vendas (FK para SalesTerritory)"
 
-      # 📌 Tabela de produtos
-      - name: Product
-        description: "Produtos disponíveis para venda"
-        columns:
-          - name: ProductID
-            description: "ID único do produto"
-            tests:
-              - unique
-              - not_null
-          - name: Name
-            description: "Nome do produto"
-          - name: ProductSubCategoryID
-            description: "ID da subcategoria do produto"
-          - name: StandardCost
-            description: "Custo padrão do produto"
-          - name: ListPrice
-            description: "Preço de venda sugerido"
-
-      # 📌 Tabela de vendedores
       - name: SalesPerson
-        description: "Vendedores cadastrados no ERP"
+        description: "Vendedores cadastrados no sistema"
         columns:
           - name: BusinessEntityID
-            description: "ID único do vendedor"
+            description: "Identificador único do vendedor (PK)"
             tests:
               - unique
               - not_null
           - name: SalesQuota
             description: "Meta de vendas do vendedor"
           - name: TerritoryID
-            description: "Região de vendas do vendedor"
+            description: "ID do território de vendas (FK para SalesTerritory)"
 
-      # 📌 Tabela de taxas de imposto
+      - name: SalesTerritory
+        description: "Territórios de vendas gerenciados pela empresa"
+        columns:
+          - name: TerritoryID
+            description: "Identificador único do território de vendas (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do território"
+          - name: CountryRegionCode
+            description: "Código do país (FK para CountryRegion)"
+          - name: SalesYTD
+            description: "Total de vendas no ano atual"
+          - name: SalesLastYear
+            description: "Total de vendas no último ano"
+
       - name: SalesTaxRate
-        description: "Taxas de imposto aplicadas nas vendas"
+        description: "Taxas de imposto aplicadas às vendas"
         columns:
           - name: SalesTaxRateID
-            description: "ID único da taxa de imposto"
+            description: "Identificador único da taxa de imposto (PK)"
             tests:
               - unique
               - not_null
           - name: TaxRate
-            description: "Percentual do imposto aplicado"
+            description: "Percentual de imposto aplicado"
           - name: StateProvinceID
-            description: "ID do estado ou província onde o imposto se aplica"
+            description: "ID do estado ou província onde a taxa se aplica (FK para StateProvince)"
 
-      # 📌 Tabela de métodos de envio
       - name: ShipMethod
         description: "Métodos de envio disponíveis"
         columns:
           - name: ShipMethodID
-            description: "ID único do método de envio"
+            description: "Identificador único do método de envio (PK)"
             tests:
               - unique
               - not_null
@@ -126,29 +119,27 @@ sources:
           - name: ShipRate
             description: "Taxa variável do frete"
 
-      # 📌 Tabela de motivos das vendas (IMPORTANTE PARA ITEM 4F)
       - name: SalesReason
-        description: "Motivos das vendas cadastrados no ERP"
+        description: "Motivos das vendas cadastrados no sistema"
         columns:
           - name: SalesReasonID
-            description: "ID único do motivo da venda"
+            description: "Identificador único do motivo da venda (PK)"
             tests:
               - unique
               - not_null
           - name: Name
             description: "Nome do motivo da venda"
           - name: ReasonType
-            description: "Categoria do motivo (ex: Promotion, Marketing, etc.)"
+            description: "Categoria do motivo (ex: Promoção, Marketing, etc.)"
 
-      # 📌 Tabela de relacionamento entre pedidos e motivos da venda
       - name: SalesOrderHeaderSalesReason
         description: "Relacionamento entre pedidos e motivos de venda"
         columns:
           - name: SalesOrderID
-            description: "ID do pedido associado ao motivo de venda"
+            description: "ID do pedido vinculado ao motivo de venda (FK para SalesOrderHeader)"
             tests:
               - not_null
           - name: SalesReasonID
-            description: "ID do motivo de venda associado ao pedido"
+            description: "ID do motivo de venda vinculado ao pedido (FK para SalesReason)"
             tests:
               - not_null

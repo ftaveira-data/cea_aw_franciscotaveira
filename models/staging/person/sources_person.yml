@@ -1,0 +1,106 @@
+version: 2
+
+sources:
+  - name: person
+    description: "Sistema de gerenciamento de pessoas da Adventure Works"
+    schema: dbt_ftaveira_aw_raw
+    database: fea24_11
+
+    tables:
+      # 📌 Tabela de pessoas
+      - name: Person
+        description: "Pessoas registradas no sistema"
+        columns:
+          - name: BusinessEntityID
+            description: "Identificador único da pessoa (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: PersonType
+            description: "Tipo de pessoa (Funcionário, Cliente, etc.)"
+          - name: FirstName
+            description: "Primeiro nome da pessoa"
+          - name: LastName
+            description: "Último nome da pessoa"
+          - name: EmailPromotion
+            description: "Status de inscrição em e-mails promocionais"
+
+      # 📌 Tabela de endereços
+      - name: Address
+        description: "Endereços cadastrados no sistema"
+        columns:
+          - name: AddressID
+            description: "Identificador único do endereço (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: AddressLine1
+            description: "Primeira linha do endereço"
+          - name: AddressLine2
+            description: "Segunda linha do endereço (opcional)"
+          - name: City
+            description: "Cidade do endereço"
+          - name: StateProvinceID
+            description: "Identificador do estado ou província (FK para StateProvince)"
+
+      # 📌 Tabela de estados e províncias
+      - name: StateProvince
+        description: "Estados e províncias onde clientes e funcionários estão localizados"
+        columns:
+          - name: StateProvinceID
+            description: "Identificador único do estado/província (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do estado ou província"
+          - name: CountryRegionCode
+            description: "Código do país (FK para CountryRegion)"
+
+      # 📌 Tabela de países e regiões
+      - name: CountryRegion
+        description: "Países e regiões associados a clientes e funcionários"
+        columns:
+          - name: CountryRegionCode
+            description: "Identificador único do país ou região (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do país ou região"
+
+      # 📌 Tabela de números de telefone
+      - name: PersonPhone
+        description: "Números de telefone associados às pessoas"
+        columns:
+          - name: BusinessEntityID
+            description: "Identificador da pessoa (FK para Person)"
+            tests:
+              - not_null
+          - name: PhoneNumber
+            description: "Número de telefone"
+          - name: PhoneNumberTypeID
+            description: "Tipo de número de telefone (Celular, Trabalho, Residencial)"
+
+      # 📌 Tabela de endereços de e-mail
+      - name: EmailAddress
+        description: "Endereços de e-mail associados às pessoas"
+        columns:
+          - name: BusinessEntityID
+            description: "Identificador da pessoa (FK para Person)"
+            tests:
+              - not_null
+          - name: EmailAddress
+            description: "Endereço de e-mail"
+
+      # 📌 Tabela de entidades de negócios
+      - name: BusinessEntity
+        description: "Entidades de negócios registradas no sistema"
+        columns:
+          - name: BusinessEntityID
+            description: "Identificador único da entidade de negócios (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: ModifiedDate
+            description: "Data da última modificação do registro"
