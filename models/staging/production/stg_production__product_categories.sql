@@ -12,4 +12,4 @@ WITH product_category_raw AS (
     FROM product_category_raw
 )
 
-SELECT * FROM renamed;
+SELECT * FROM renamed
