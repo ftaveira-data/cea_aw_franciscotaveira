@@ -143,3 +143,62 @@ sources:
             description: "ID do motivo de venda vinculado ao pedido (FK para SalesReason)"
             tests:
               - not_null
+
+      - name: CurrencyRate
+        description: "Taxas de câmbio entre diferentes moedas"
+        columns:
+          - name: CurrencyRateID
+            description: "Identificador único da taxa de câmbio (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: CurrencyRateDate
+            description: "Data da taxa de câmbio"
+          - name: FromCurrencyCode
+            description: "Código da moeda de origem"
+          - name: ToCurrencyCode
+            description: "Código da moeda de destino"
+          - name: AverageRate
+            description: "Taxa de câmbio média"
+          - name: EndOfDayRate
+            description: "Taxa de câmbio no final do dia"
+          - name: ModifiedDate
+            description: "Data da última modificação"
+
+      - name: CreditCard
+        description: "Cartões de crédito cadastrados no sistema"
+        columns:
+          - name: CreditCardID
+            description: "Identificador único do cartão de crédito (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: CardType
+            description: "Tipo do cartão (Visa, Mastercard, etc.)"
+          - name: CardNumber
+            description: "Número do cartão de crédito"
+          - name: ExpMonth
+            description: "Mês de expiração do cartão"
+          - name: ExpYear
+            description: "Ano de expiração do cartão"
+          - name: ModifiedDate
+            description: "Data da última modificação"
+
+      - name: Store
+        description: "Lojas cadastradas no sistema"
+        columns:
+          - name: BusinessEntityID
+            description: "Identificador único da loja (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome da loja"
+          - name: SalesPersonID
+            description: "Identificador do vendedor responsável (FK para SalesPerson)"
+          - name: Demographics
+            description: "Dados demográficos da loja"
+          - name: RowGuid
+            description: "Identificador global único"
+          - name: ModifiedDate
+            description: "Data da última modificação"
