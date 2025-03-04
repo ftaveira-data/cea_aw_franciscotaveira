@@ -202,3 +202,9 @@ sources:
             description: "Identificador global único"
           - name: ModifiedDate
             description: "Data da última modificação"
+
+tests:
+  - test_total_order_value:
+      name: "Validar cálculo de TOTAL_ORDER_VALUE"
+      model: int_sales__orders
+      expression: "ROUND(total_order_value, 2) = ROUND(subtotal + tax_amount + freight_cost, 2)"

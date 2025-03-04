@@ -23,10 +23,10 @@ WITH sales_order_raw AS (
       , CAST(CreditCardID AS INT) AS fk_credit_card  -- FK para a tabela CreditCard
       , CAST(CreditCardApprovalCode AS STRING) AS credit_card_approval_code  -- Código de aprovação do cartão de crédito
       , CAST(CurrencyRateID AS INT) AS fk_currency_rate  -- FK para a tabela CurrencyRate
-      , CAST(SubTotal AS FLOAT) AS subtotal  -- Valor do subtotal (sem taxas)
-      , CAST(TaxAmt AS FLOAT) AS tax_amount  -- Valor do imposto aplicado
-      , CAST(Freight AS FLOAT) AS freight_cost  -- Custo do frete
-      , CAST(TotalDue AS FLOAT) AS total_due  -- Valor total do pedido
+      , CAST(SubTotal AS NUMERIC(18,2)) AS subtotal  -- Valor do subtotal (sem taxas)
+      , CAST(TaxAmt AS NUMERIC(18,2)) AS tax_amount  -- Valor do imposto aplicado
+      , CAST(Freight AS NUMERIC(18,2)) AS freight_cost  -- Custo do frete
+      , CAST(TotalDue AS NUMERIC(18,2)) AS total_order_value  -- Valor total do pedido
       , CAST(Comment AS STRING) AS order_comment  -- Comentários adicionais sobre o pedido
       , UPPER(CAST(RowGuid AS STRING)) AS id_unique  -- Identificador único do pedido
       , DATE_TRUNC('DAY', CAST(ModifiedDate AS TIMESTAMP)) AS modified_date  -- Data de última modificação
@@ -34,3 +34,4 @@ WITH sales_order_raw AS (
 )
 
 SELECT * FROM renamed
+
