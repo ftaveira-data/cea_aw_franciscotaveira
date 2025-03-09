@@ -91,6 +91,23 @@ sources:
           - name: SalesLastYear
             description: "Total de vendas no último ano"
 
+      - name: StateProvince
+        description: "Estados e províncias cadastrados no sistema"
+        columns:
+          - name: StateProvinceID
+            description: "Identificador único do estado/província (PK)"
+            tests:
+              - unique
+              - not_null
+          - name: StateProvinceCode
+            description: "Código do estado/província"
+          - name: CountryRegionCode
+            description: "Código do país (FK para CountryRegion)"
+          - name: Name
+            description: "Nome do estado/província"
+          - name: TerritoryID
+            description: "ID do território relacionado (FK para SalesTerritory)"
+
       - name: SalesTaxRate
         description: "Taxas de imposto aplicadas às vendas"
         columns:
@@ -144,45 +161,22 @@ sources:
             tests:
               - not_null
 
-      - name: CurrencyRate
-        description: "Taxas de câmbio entre diferentes moedas"
+      - name: Address
+        description: "Endereços cadastrados no sistema"
         columns:
-          - name: CurrencyRateID
-            description: "Identificador único da taxa de câmbio (PK)"
+          - name: AddressID
+            description: "Identificador único do endereço (PK)"
             tests:
               - unique
               - not_null
-          - name: CurrencyRateDate
-            description: "Data da taxa de câmbio"
-          - name: FromCurrencyCode
-            description: "Código da moeda de origem"
-          - name: ToCurrencyCode
-            description: "Código da moeda de destino"
-          - name: AverageRate
-            description: "Taxa de câmbio média"
-          - name: EndOfDayRate
-            description: "Taxa de câmbio no final do dia"
-          - name: ModifiedDate
-            description: "Data da última modificação"
-
-      - name: CreditCard
-        description: "Cartões de crédito cadastrados no sistema"
-        columns:
-          - name: CreditCardID
-            description: "Identificador único do cartão de crédito (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: CardType
-            description: "Tipo do cartão (Visa, Mastercard, etc.)"
-          - name: CardNumber
-            description: "Número do cartão de crédito"
-          - name: ExpMonth
-            description: "Mês de expiração do cartão"
-          - name: ExpYear
-            description: "Ano de expiração do cartão"
-          - name: ModifiedDate
-            description: "Data da última modificação"
+          - name: AddressLine1
+            description: "Primeira linha do endereço"
+          - name: AddressLine2
+            description: "Segunda linha do endereço (opcional)"
+          - name: City
+            description: "Cidade do endereço"
+          - name: StateProvinceID
+            description: "Identificador do estado ou província (FK para StateProvince)"
 
       - name: Store
         description: "Lojas cadastradas no sistema"
@@ -202,9 +196,3 @@ sources:
             description: "Identificador global único"
           - name: ModifiedDate
             description: "Data da última modificação"
-
-tests:
-  - test_total_order_value:
-      name: "Validar cálculo de TOTAL_ORDER_VALUE"
-      model: int_sales__orders
-      expression: "ROUND(total_order_value, 2) = ROUND(subtotal + tax_amount + freight_cost, 2)"
