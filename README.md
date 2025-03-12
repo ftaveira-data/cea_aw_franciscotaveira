@@ -79,9 +79,3 @@ Os dashboards fornecem insights como:
 - 💾 **Código do projeto** disponível no **GitHub**
 - 📊 **Dashboard interativo** no Power BI ou Looker Studio
 - 🎥 **Vídeo explicativo** demonstrando todas as etapas do projeto
-
-## 🚀 Como Executar o Projeto
-
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/ftaveira-data/cea_aw_franciscotaveira.git
