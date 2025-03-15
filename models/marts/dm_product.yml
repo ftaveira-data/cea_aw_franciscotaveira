@@ -1,0 +1,73 @@
+models:
+  - name: dm_product
+    description: "Dimensão de produtos da Adventure Works."
+    columns:
+      - name: COLOR
+        description: "Cor do produto."
+        tests: 
+          - not_null
+          
+      - name: SAFETY_STOCK_LEVEL
+        description: "Nível mínimo de estoque de segurança."
+        tests: 
+          - not_null
+          
+      - name: REORDER_POINT
+        description: "Ponto de reabastecimento do estoque."
+        tests: 
+          - not_null
+          
+      - name: STANDARD_COST
+        description: "Custo padrão do produto."
+        tests: 
+          - not_null
+          
+      - name: LIST_PRICE
+        description: "Preço de venda do produto."
+        tests: 
+          - not_null
+          
+      - name: SIZE
+        description: "Tamanho do produto."
+        tests: 
+          - not_null
+          
+      - name: SIZE_UNIT_MEASURE
+        description: "Unidade de medida do tamanho."
+        tests: 
+          - not_null
+          
+      - name: WEIGHT
+        description: "Peso do produto."
+        tests: 
+          - not_null
+          
+      - name: WEIGHT_UNIT_MEASURE
+        description: "Unidade de medida do peso."
+        tests: 
+          - not_null
+           
+      - name: DAYS_TO_MANUFACTURE
+        description: "Tempo de fabricação em dias."
+        tests: 
+          - not_null
+           
+      - name: FK_PRODUCT_SUBCATEGORY
+        description: "Chave estrangeira para a subcategoria do produto."
+        tests: 
+          - not_null
+           
+      - name: PRODUCT_SUBCATEGORY_NAME
+        description: "Nome da subcategoria do produto."
+        tests: 
+          - not_null
+           
+      - name: FK_PRODUCT_CATEGORY
+        description: "Chave estrangeira para a categoria do produto."
+        tests: 
+          - not_null
+           
+      - name: PRODUCT_CATEGORY_NAME
+        description: "Nome da categoria do produto."
+        tests: 
+          - not_null
