@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: bridge_salesreason
+    description: >
+      Bridge table representando o relacionamento N:N entre pedidos de venda e seus motivos associados.
+      Cada linha representa uma ligação entre um pedido (sales_order_id) e um motivo (sales_reason_id).
+
+    columns:
+      - name: sales_order_id
+        description: "Chave do pedido de venda"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('fact_sales')
+              field: sales_order_id
+
+      - name: sales_reason_id
+        description: "Chave do motivo de venda"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dm_salesreason')
+              field: sales_reason_id
