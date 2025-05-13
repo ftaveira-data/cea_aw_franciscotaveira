@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: dm_salesperson
+    description: "Dimensão de vendedores com metas, comissão e localização"
+    columns:
+      - name: salesperson_id
+        description: "Chave primária do vendedor"
+        tests:
+          - unique
+          - not_null
+
+      - name: salesperson_identifier
+        description: "Identificador legível do vendedor (ex: Salesperson 1 - SP)"
+
+      - name: sales_quota
+        description: "Meta de vendas atribuída ao vendedor"
+
+      - name: bonus
+        description: "Bônus recebido com base em performance"
+
+      - name: commission_pct
+        description: "Percentual de comissão aplicado nas vendas"
+
+      - name: sales_ytd
+        description: "Total vendido no ano atual"
+
+      - name: sales_last_year
+        description: "Total vendido no ano anterior"
+
+      - name: state_province_name
+        description: "Nome do estado associado ao território do vendedor"
+
+      - name: state_province_code
+        description: "Código do estado associado"

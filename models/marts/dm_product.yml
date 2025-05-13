@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: dm_product
+    description: "Dimensão de produtos da Adventure Works, contendo nome, categoria e atributos físicos"
+    columns:
+      - name: product_id
+        description: "Chave primária do produto"
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Nome do produto"
+
+      - name: product_number
+        description: "Código do produto"
+
+      - name: category_name
+        description: "Categoria principal do produto"
+
+      - name: subcategory_name
+        description: "Subcategoria do produto"
+
+      - name: color
+        description: "Cor do produto"
+
+      - name: size
+        description: "Tamanho do produto"
+
+      - name: weight
+        description: "Peso do produto"
+
+      - name: standard_cost
+        description: "Custo padrão"
+
+      - name: list_price
+        description: "Preço de lista"

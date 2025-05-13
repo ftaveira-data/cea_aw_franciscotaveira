@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: dm_store
+    description: "Dimensão de lojas (clientes corporativos) com dados de nome e localização"
+    columns:
+      - name: store_id
+        description: "Chave primária da loja"
+        tests:
+          - unique
+          - not_null
+
+      - name: store_name
+        description: "Nome da loja"
+
+      - name: city
+        description: "Cidade da loja"
+
+      - name: state
+        description: "Estado"
+
+      - name: country
+        description: "País"

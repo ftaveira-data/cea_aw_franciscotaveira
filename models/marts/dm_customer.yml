@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: dm_customer
+    description: "Dimensão de clientes, com dados pessoais e localização"
+    columns:
+      - name: customer_id
+        description: "Chave primária do cliente"
+        tests:
+          - unique
+          - not_null
+
+      - name: full_name
+        description: "Nome completo da pessoa"
+
+      - name: email
+        description: "Endereço de e-mail"
+
+      - name: phone_number
+        description: "Telefone principal"
+
+      - name: city
+        description: "Cidade"
+
+      - name: state
+        description: "Estado"
+
+      - name: country
+        description: "País"
