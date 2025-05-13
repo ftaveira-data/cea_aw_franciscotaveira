@@ -2,203 +2,199 @@ version: 2
 
 sources:
   - name: sales
-    description: "Sistema de vendas da Adventure Works"
+    description: "Dados transacionais de vendas extraídos do ERP da Adventure Works"
     schema: dbt_ftaveira_aw_raw
     database: fea24_11
 
     tables:
-      - name: SalesOrderHeader
-        description: "Cabeçalho dos pedidos de venda"
-        columns:
-          - name: SalesOrderID
-            description: "Identificador único do pedido de venda (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: CustomerID
-            description: "Identificador do cliente (FK para Customer)"
-            tests:
-              - not_null       
-          - name: SalesPersonID
-            description: "Identificador do vendedor responsável pela venda (FK para SalesPerson)"
-          - name: OrderDate
-            description: "Data em que o pedido foi realizado"
-            tests:
-              - not_null
-          - name: TotalDue
-            description: "Valor total devido pelo pedido"
-
-      - name: SalesOrderDetail
-        description: "Detalhes dos itens vendidos em cada pedido"
-        columns:
-          - name: SalesOrderID
-            description: "ID do pedido (FK para SalesOrderHeader)"
-            tests:
-              - not_null
-          - name: ProductID
-            description: "ID do produto vendido (FK para Product)"
-            tests:
-              - not_null
-          - name: OrderQty
-            description: "Quantidade comprada"
-          - name: UnitPrice
-            description: "Preço unitário do produto"
-          - name: LineTotal
-            description: "Valor total da linha do pedido"
-
       - name: Customer
-        description: "Clientes cadastrados no sistema"
+        description: "Tabela com os clientes registrados"
+        tags: ["dim_customer"]
         columns:
           - name: CustomerID
-            description: "Identificador único do cliente (PK)"
+            description: "Chave primária do cliente"
             tests:
               - unique
               - not_null
           - name: PersonID
-            description: "Referência para a tabela Person (FK para Person)"
+            description: "FK para a tabela Person"
           - name: StoreID
-            description: "ID da loja vinculada ao cliente"
+            description: "FK para a tabela Store (caso cliente corporativo)"
           - name: TerritoryID
-            description: "ID do território de vendas (FK para SalesTerritory)"
-
-      - name: SalesPerson
-        description: "Vendedores cadastrados no sistema"
-        columns:
-          - name: BusinessEntityID
-            description: "Identificador único do vendedor (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: SalesQuota
-            description: "Meta de vendas do vendedor"
-          - name: TerritoryID
-            description: "ID do território de vendas (FK para SalesTerritory)"
-
-      - name: SalesTerritory
-        description: "Territórios de vendas gerenciados pela empresa"
-        columns:
-          - name: TerritoryID
-            description: "Identificador único do território de vendas (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: Name
-            description: "Nome do território"
-          - name: CountryRegionCode
-            description: "Código do país (FK para CountryRegion)"
-          - name: SalesYTD
-            description: "Total de vendas no ano atual"
-          - name: SalesLastYear
-            description: "Total de vendas no último ano"
-
-      - name: SalesTaxRate
-        description: "Taxas de imposto aplicadas às vendas"
-        columns:
-          - name: SalesTaxRateID
-            description: "Identificador único da taxa de imposto (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: TaxRate
-            description: "Percentual de imposto aplicado"
-          - name: StateProvinceID
-            description: "ID do estado ou província onde a taxa se aplica (FK para StateProvince)"
-
-      - name: ShipMethod
-        description: "Métodos de envio disponíveis"
-        columns:
-          - name: ShipMethodID
-            description: "Identificador único do método de envio (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: Name
-            description: "Nome do método de envio"
-          - name: ShipBase
-            description: "Custo base do frete"
-          - name: ShipRate
-            description: "Taxa variável do frete"
-
-      - name: SalesReason
-        description: "Motivos das vendas cadastrados no sistema"
-        columns:
-          - name: SalesReasonID
-            description: "Identificador único do motivo da venda (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: Name
-            description: "Nome do motivo da venda"
-          - name: ReasonType
-            description: "Categoria do motivo (ex: Promoção, Marketing, etc.)"
-
-      - name: SalesOrderHeaderSalesReason
-        description: "Relacionamento entre pedidos e motivos de venda"
-        columns:
-          - name: SalesOrderID
-            description: "ID do pedido vinculado ao motivo de venda (FK para SalesOrderHeader)"
-            tests:
-              - not_null
-          - name: SalesReasonID
-            description: "ID do motivo de venda vinculado ao pedido (FK para SalesReason)"
-            tests:
-              - not_null
-
-      - name: CurrencyRate
-        description: "Taxas de câmbio entre diferentes moedas"
-        columns:
-          - name: CurrencyRateID
-            description: "Identificador único da taxa de câmbio (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: CurrencyRateDate
-            description: "Data da taxa de câmbio"
-          - name: FromCurrencyCode
-            description: "Código da moeda de origem"
-          - name: ToCurrencyCode
-            description: "Código da moeda de destino"
-          - name: AverageRate
-            description: "Taxa de câmbio média"
-          - name: EndOfDayRate
-            description: "Taxa de câmbio no final do dia"
-          - name: ModifiedDate
-            description: "Data da última modificação"
-
-      - name: CreditCard
-        description: "Cartões de crédito cadastrados no sistema"
-        columns:
-          - name: CreditCardID
-            description: "Identificador único do cartão de crédito (PK)"
-            tests:
-              - unique
-              - not_null
-          - name: CardType
-            description: "Tipo do cartão (Visa, Mastercard, etc.)"
-          - name: CardNumber
-            description: "Número do cartão de crédito"
-          - name: ExpMonth
-            description: "Mês de expiração do cartão"
-          - name: ExpYear
-            description: "Ano de expiração do cartão"
-          - name: ModifiedDate
-            description: "Data da última modificação"
+            description: "FK para a tabela Territory"
 
       - name: Store
-        description: "Lojas cadastradas no sistema"
+        description: "Tabela com lojas associadas aos clientes corporativos"
+        tags: ["dim_store"]
         columns:
           - name: BusinessEntityID
-            description: "Identificador único da loja (PK)"
+            description: "Chave primária da loja"
             tests:
               - unique
               - not_null
           - name: Name
             description: "Nome da loja"
           - name: SalesPersonID
-            description: "Identificador do vendedor responsável (FK para SalesPerson)"
-          - name: Demographics
-            description: "Dados demográficos da loja"
-          - name: RowGuid
-            description: "Identificador global único"
-          - name: ModifiedDate
-            description: "Data da última modificação"
+            description: "FK para o vendedor associado"
+
+      - name: SalesOrderHeader
+        description: "Cabeçalho dos pedidos de venda"
+        tags: ["fact_sales"]
+        columns:
+          - name: SalesOrderID
+            description: "Chave primária do pedido"
+            tests:
+              - unique
+              - not_null
+          - name: CustomerID
+            description: "FK para Customer"
+          - name: OrderDate
+            description: "Data do pedido"
+          - name: DueDate
+            description: "Data de vencimento"
+          - name: ShipDate
+            description: "Data de envio"
+          - name: Status
+            description: "Status do pedido"
+          - name: SalesPersonID
+            description: "FK para SalesPerson"
+          - name: CreditCardID
+            description: "FK para o cartão utilizado"
+          - name: BillToAddressID
+            description: "FK para endereço de cobrança"
+          - name: ShipToAddressID
+            description: "FK para endereço de entrega"
+          - name: SubTotal
+            description: "Valor subtotal"
+          - name: TaxAmt
+            description: "Valor do imposto"
+          - name: Freight
+            description: "Valor do frete"
+          - name: TotalDue
+            description: "Valor total do pedido"
+
+      - name: SalesOrderDetail
+        description: "Detalhamento dos itens dos pedidos de venda"
+        tags: ["fact_sales"]
+        columns:
+          - name: SalesOrderDetailID
+            description: "Chave primária do item do pedido"
+            tests:
+              - unique
+              - not_null
+          - name: SalesOrderID
+            description: "FK para SalesOrderHeader"
+          - name: ProductID
+            description: "Produto comprado"
+          - name: OrderQty
+            description: "Quantidade comprada"
+          - name: UnitPrice
+            description: "Preço unitário"
+          - name: UnitPriceDiscount
+            description: "Desconto aplicado"
+
+      - name: SalesReason
+        description: "Motivos atribuídos às vendas (ex: Promoção)"
+        tags: ["dim_salesreason"]
+        columns:
+          - name: SalesReasonID
+            description: "Chave primária"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do motivo"
+          - name: ReasonType
+            description: "Tipo de motivo (ex: Marketing, Promoção)"
+
+      - name: SalesOrderHeaderSalesReason
+        description: "Tabela bridge entre pedidos e motivos de venda (relacionamento N:N)"
+        tags: ["bridge_salesreason"]
+        columns:
+          - name: SalesOrderID
+            description: "FK para SalesOrderHeader"
+            tests:
+              - not_null
+          - name: SalesReasonID
+            description: "FK para SalesReason"
+            tests:
+              - not_null
+
+      - name: CreditCard
+        description: "Cartões de crédito utilizados nos pedidos"
+        tags: ["dim_credit_card"]
+        columns:
+          - name: CreditCardID
+            description: "Chave primária"
+            tests:
+              - unique
+              - not_null
+          - name: CardType
+            description: "Tipo do cartão (Visa, MasterCard, etc.)"
+          - name: CardNumber
+            description: "Número do cartão (mascarado)"
+          - name: ExpMonth
+            description: "Mês de expiração"
+          - name: ExpYear
+            description: "Ano de expiração"
+
+      - name: SalesPerson
+        description: "Tabela com os vendedores da empresa"
+        tags: ["dim_salesperson"]
+        columns:
+          - name: BusinessEntityID
+            description: "Chave primária do vendedor"
+            tests:
+              - unique
+              - not_null
+          - name: SalesQuota
+            description: "Meta de vendas atribuída"
+          - name: Bonus
+            description: "Bônus recebido"
+          - name: CommissionPct
+            description: "Percentual de comissão"
+          - name: SalesYTD
+            description: "Total de vendas no ano atual"
+          - name: SalesLastYear
+            description: "Total de vendas no ano anterior"
+
+      - name: SalesTerritory
+        description: "Territórios de vendas associados a regiões geográficas"
+        tags: ["dim_territory"]
+        columns:
+          - name: TerritoryID
+            description: "Chave primária do território"
+            tests:
+              - unique
+              - not_null
+          - name: Name
+            description: "Nome do território"
+          - name: CountryRegionCode
+            description: "Código do país associado"
+          - name: Group
+            description: "Grupo de território (ex: América do Norte)"
+
+
+      - name: CurrencyRate
+        description: "Taxas de câmbio utilizadas em pedidos internacionais"
+        tags: ["dim_currency"]
+        columns:
+          - name: CurrencyRateID
+            description: "Chave primária da taxa de câmbio"
+            tests:
+              - unique
+              - not_null
+          - name: FromCurrencyCode
+            description: "Código da moeda de origem"
+          - name: ToCurrencyCode
+            description: "Código da moeda de destino"
+          - name: AverageRate
+            description: "Taxa média de câmbio no período"
+          - name: EndOfDayRate
+            description: "Taxa de câmbio no fim do dia"
+          - name: CurrencyRateDate
+            description: "Data da taxa de câmbio"
+
+
+
+
