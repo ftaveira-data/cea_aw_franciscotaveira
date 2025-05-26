@@ -1,81 +1,113 @@
-# Certificação Analytics Engineer by Indicium
+# 🎓 Certificação Analytics Engineer by Indicium
 
-# 🚴 Adventure Works Analytics Project
+# 🚴 Projeto Adventure Works Analytics
 
 ## 📌 Sobre o Projeto
 
-Este projeto faz parte da **Certificação em Engenharia de Analytics da Indicium** e tem como objetivo construir uma **plataforma moderna de dados** para a empresa **Adventure Works**, uma indústria de bicicletas. O foco principal é transformar a área de vendas, possibilitando decisões estratégicas baseadas em dados confiáveis.
+Este repositório é parte do desafio da **Certificação em Engenharia de Analytics da Indicium**, com foco na construção de uma **plataforma moderna de dados** para a empresa fictícia **Adventure Works**, uma indústria de bicicletas.
 
-O projeto segue o **Modern Analytics Stack**, utilizando ferramentas como **PostgreSQL, dbt, Snowflake** e uma ferramenta de BI para visualização.
+O projeto segue o conceito de **Modern Analytics Stack**, utilizando **Snowflake, dbt, Power BI e GitHub**, com foco principal em transformar dados brutos de vendas em insights acionáveis e confiáveis.
 
-## 🎯 Objetivos
+---
 
-- Construção de um **Data Warehouse** para centralizar os dados da empresa;
-- Modelagem de **tabelas fato e dimensão** para responder às necessidades do negócio;
-- Transformação de dados utilizando **dbt** com documentação e testes de qualidade;
-- Desenvolvimento de **dashboards interativos** para análise de vendas;
-- Garantia da **veracidade dos dados** (exemplo: validação de vendas de 2011);
-- Criação de um vídeo explicativo sobre a implementação.
+## 🎯 Objetivos do Projeto
 
-## 📊 Contexto de Negócio
+- Construir um **Data Warehouse** baseado em modelo dimensional (Star Schema);
+- Modelar **tabelas fato e dimensão** para análise de vendas;
+- Criar transformações com **dbt**, incluindo documentação e testes automatizados;
+- Desenvolver **dashboard interativo** no Power BI;
+- Responder perguntas críticas do negócio, como top produtos, regiões e motivos de compra;
+- Garantir a **veracidade dos dados**, incluindo validação de valores específicos (ex: vendas de 2011);
+- Documentar todo o processo e apresentar em vídeo.
 
-A **Adventure Works** possui mais de **500 produtos**, **20.000 clientes** e **31.000 pedidos**, mas enfrenta dificuldades na integração de seus sistemas (**ERP, CRM e Web Analytics**), além de ceticismo interno sobre o retorno do investimento em dados.
+---
 
-O CEO, **Carlos Silveira**, vê a análise de dados como diferencial estratégico, enquanto a diretora comercial, **Silvana Teixeira**, questiona o impacto direto nas vendas. Para ganhar credibilidade, **dados confiáveis e bem estruturados são essenciais**.
+## 🧱 Arquitetura da Solução
 
-## 📦 Arquitetura do Projeto
+1. **Ingestão de Dados**: Dados carregados em Snowflake em uma estrutura bruta (`raw`).
+2. **Transformação**: Utilização de **dbt** para criar camadas `staging`, `intermediate` e `marts`.
+3. **Modelagem Dimensional**: Aplicação de Star Schema com tabelas fato e dimensões.
+4. **Visualização**: Criação de dashboard no **Power BI Desktop**, entregue via `.pbix`.
+5. **Entrega Final**: Código hospedado no **GitHub**, com documentação e vídeo explicativo.
 
-1. **Ingestão de Dados**: Coletamos informações do banco **PostgreSQL** e outras fontes.
-2. **Transformação**: Utilizamos **dbt** para modelar tabelas de fatos e dimensões.
-3. **Validação e Testes**: Implementamos **testes automatizados** para garantir a consistência dos dados.
-4. **Visualização**: Criamos dashboards interativos no **Power BI ou Looker Studio**.
-5. **Documentação**: Toda a modelagem e código estão devidamente documentados.
-6. **Entrega Final**: Código hospedado no **GitHub** e vídeo explicativo gravado.
+---
 
-## 🛠 Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
-- **dbt**: Modelagem de dados e criação do Data Warehouse.
-- **Snowflake** : Armazenamento otimizado para análises.
-- **Power BI**: Construção de dashboards interativos.
-- **GitHub**: Controle de versão do projeto.
-- **SQL**: Para consultas e scripts auxiliares.
+- **Snowflake** → Data warehouse em nuvem
+- **dbt (Data Build Tool)** → Modelagem e transformação de dados
+- **Power BI Desktop** → Visualização dos dados e construção do dashboard
+- **GitHub** → Versionamento do projeto e entrega
+- **SQL** → Linguagem principal para modelagem analítica
 
-## 📌 Modelagem de Dados
+---
 
-A modelagem segue o **modelo dimensional**, separando os dados em:
+## 🧩 Modelagem Dimensional
 
-- **Tabelas Fato**:
-  - `fato_pedidos`: Contém informações de pedidos, valores e quantidades vendidas.
-  
-- **Tabelas Dimensão**:
-  - `dim_cliente`: Dados dos clientes.
-  - `dim_produto`: Informações dos produtos.
-  - `dim_vendedor`: Informações sobre os vendedores.
-  - `dim_localidade`: Cidades, estados e países das vendas.
-  - `dim_motivo_venda`: Razões associadas a cada pedido.
+### Fato:
+- `fact_sales`: vendas consolidadas com métricas como quantidade, valor bruto, desconto, valor líquido (lucro), ticket médio etc.
 
-## 📈 Perguntas de Negócio Respondidas
+### Dimensões:
+- `dm_product`: produtos e categorias
+- `dm_customer`: clientes e seus dados de localização
+- `dm_store`: lojas
+- `dm_salesperson`: vendedores
+- `dm_salesreason`: motivos de venda
+- `bridge_salesreason`: tabela ponte para relacionamento N:N
 
-Os dashboards fornecem insights como:
+---
 
-1. **Número total de pedidos**, produtos vendidos e valores negociados.
-2. **Ranking de clientes** e produtos com maior ticket médio.
-3. **Performance de vendas** por localização, tipo de pagamento e período.
-4. **Comparação de desempenho comercial** entre cidades e estados.
-5. **Tendências de vendas ao longo do tempo**.
-6. **Impacto de promoções** nas vendas.
+## 📊 Análises e Perguntas Respondidas
 
-## 🔍 Validação de Dados
+Os dashboards permitem responder com clareza:
 
-- O CEO solicitou uma **confirmação exata das vendas de 2011**: **USD 12.646.112,16**.
-- Testes automatizados no dbt incluem:
-  - Verificação de **chaves primárias** e integridade referencial.
-  - Testes de consistência entre tabelas **fato e dimensão**.
-  - Conferência de métricas como **ticket médio e número de pedidos**.
+1. Vendas por produto, cliente e motivo de venda (item 4a)
+2. Produtos com maior ticket médio por local e período (item 4b)
+3. Top 10 clientes por valor negociado (item 4c)
+4. Top 5 cidades com maior valor de venda (item 4d)
+5. Evolução temporal de vendas (item 4e)
+6. Produto mais vendido com motivo de venda “Promotion” (item 4f)
 
-## 📑 Entregáveis
+---
 
-- 📄 **Diagrama conceitual** do Data Warehouse (**PDF**)
-- 💾 **Código do projeto** disponível no **GitHub**
-- 📊 **Dashboard interativo** no Power BI ou Looker Studio
-- 🎥 **Vídeo explicativo** demonstrando todas as etapas do projeto
+## 📈 Visualizações Criadas no Dashboard
+
+- Página 1: Visão Geral
+  - KPIs principais
+  - Gráfico de evolução mensal
+  - Vendas por estado
+- Página 2: Análise de Produtos
+  - Top produtos vendidos
+  - Ticket médio por produto
+  - Vendas com motivo “Promotion”
+- Página 3: Análise de Clientes
+  - Top clientes
+  - Média de pedidos por cliente
+  - Mapa de vendas por região
+
+---
+
+## ✅ Validação de Dados
+
+- O CEO requisitou validação das vendas de 2011: **USD 12.646.112,16**
+- Utilizamos testes do dbt:
+  - **not_null**
+  - **unique**
+  - **relationship**
+  - Validação de métricas como ticket médio, desconto e quantidade de pedidos
+
+---
+
+## 📁 Estrutura do Repositório
+
+```bash
+📦 adventureworks-certificacao/
+├── dbt/
+│   └── models/
+│       ├── staging/
+│       ├── intermediate/
+│       └── marts/
+├── dashboard/
+│   └── adventureworks_dashboard.pbix
+├── DOCUMENTACAO.md
+├── README.md
