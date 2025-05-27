@@ -45,3 +45,8 @@ models:
     marts:
       +schema: marts
       +materialized: table
+
+    # 🔹 Test Layer - Validation models and assertions
+    tests:
+      +schema: test
+      +materialized: table
